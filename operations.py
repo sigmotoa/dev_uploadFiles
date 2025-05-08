@@ -17,12 +17,12 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 async def upload_file(file: UploadFile, filename:str):
     content = await file.read()
     file_name = f"image/{filename}"
-    res = supabase.storage().from_(SUPABASE_BUCKET).upload(file_name, content,{"content-type":file.content_type})
+    res = supabase.storage.from_(SUPABASE_BUCKET).upload(file_name, content,{"content-type":file.content_type})
 
-    if res.get("error"):
-        return {"error": res["error"]["message"]}
+    ##if res:
+      ##  return {"error": res["error"]["message"]}
 
-    file_url = supabase.storage().from_(SUPABASE_BUCKET).get_public_url(filename)
+    file_url = supabase.storage.from_(SUPABASE_BUCKET).get_public_url(file_name)
 
     return file_url
 
